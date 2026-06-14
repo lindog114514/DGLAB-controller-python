@@ -1,10 +1,10 @@
 [build-system]
 requires = ["setuptools>=61.0"]
-build-backend = "setuptools.backends._legacy:_Backend"
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "dglab-vibrate-controller"
-version = "0.1.0"
+version = "0.1.1"
 description = "使用Python来实现对于负鼠振动控制器的控制"
 readme = "README.md"
 authors = [{name = "lindog114514", email = "kaikaihe467@gamil.com"}]
