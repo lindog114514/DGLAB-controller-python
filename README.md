@@ -11,3 +11,8 @@ pip install dglab-vibrate-controller
 
 ## API文档 
 [API文档](docs/README.md)
+
+## 联系作者
+
+* Q群:870333220
+* QQ:1936219518
