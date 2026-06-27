@@ -4,10 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "dglab-controller-python"
-version = "0.1"
-description = "一种用于控制负鼠振动控制器和读取灵猫和狼爪传感器的Python库"
+version = "0.1.0"
+description = "用于控制负鼠振动控制器以及读取灵猫和爪印传感器的 Python 库"
 readme = "README.md"
-authors = [{name = "lindog114514", email = "kaikaihe467@gamil.com"}]
+authors = [{name = "lindog114514", email = "kaikaihe467@gmail.com"}]
 license = {text = "MIT"}
 requires-python = ">=3.10"
 dependencies = [
@@ -21,15 +21,11 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
-    "Programming Language :: Python :: 3.14",
     "Operating System :: OS Independent",
 ]
 
 [project.urls]
-Homepage = "https://github.com/lindog114514/DGLAB-vibrate-controller-python"
+Homepage = "https://github.com/lindog114514/DGLAB-controller-python"
 
 [tool.setuptools.packages.find]
-include = ["dglab-controller-python*"]
-
-[tool.setuptools]
-universal = true
+include = ["dg_lab_devices*"]
