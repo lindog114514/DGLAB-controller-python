@@ -30,3 +30,6 @@ Homepage = "https://github.com/lindog114514/DGLAB-vibrate-controller-python"
 
 [tool.setuptools.packages.find]
 include = ["dglab-controller-python*"]
+
+[tool.setuptools]
+universal = true

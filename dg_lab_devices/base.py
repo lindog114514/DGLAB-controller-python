@@ -3,6 +3,7 @@ import asyncio
 import logging
 from abc import ABC, abstractmethod
 from bleak import BleakClient, BleakScanner
+from bleak.exc import BleakError  # 新增
 from .common import CHAR_WRITE, CHAR_NOTIFY, CHAR_BATTERY, DeviceError
 
 logger = logging.getLogger(__name__)
@@ -42,13 +43,24 @@ class BaseDevice(ABC):
 
     # ---------- 连接管理 ----------
     async def connect(self) -> None:
-        if self.address is None:
-            device = await BleakScanner.find_device_by_name(self.name, timeout=5.0)
-            if device is None:
-                raise DeviceError(f"未找到设备: {self.name}")
-            self.address = device.address
-        self.client = BleakClient(self.address)
-        await self.client.connect()
+        try:
+            if self.address is None:
+                device = await BleakScanner.find_device_by_name(self.name, timeout=5.0)
+                if device is None:
+                    raise DeviceError(f"未找到设备: {self.name}")
+                self.address = device.address
+            self.client = BleakClient(self.address)
+            await self.client.connect()
+        except BleakError as e:
+            msg = str(e).lower()
+            if any(keyword in msg for keyword in ("bluetooth", "adapter")) and \
+               any(keyword in msg for keyword in ("off", "disabled", "not available", "not found")):
+                raise DeviceError("蓝牙未开启，请打开蓝牙后重试") from e
+            raise DeviceError(f"连接失败: {e}") from e
+        except Exception as e:
+            raise DeviceError(f"设备连接异常: {e}") from e
+
+        # 连接成功后启动通知
         await self.client.start_notify(CHAR_NOTIFY, self._on_main_notify)
         try:
             await self.client.start_notify(CHAR_BATTERY, self._on_battery_notify)
